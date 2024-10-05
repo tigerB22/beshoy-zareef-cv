@@ -1,0 +1,325 @@
+  <!DOCTYPE html>
+  <html lang="ar">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>عرض تقديمي متجاوب مع صور</title>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #eef2f3;
+              margin: 0;
+              padding: 20px;
+          }
+          .container {
+              max-width: 800px;
+              margin: auto;
+              background: white;
+              padding: 30px;
+              border-radius: 12px;
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          }
+          h1 {
+              text-align: center;
+              color: #333;
+              font-size: 2em;
+              margin-bottom: 10px;
+          }
+          .profile {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              margin-bottom: 30px;
+              border-bottom: 2px solid #007bff;
+              padding-bottom: 20px;
+          }
+          .profile img {
+              border-radius: 50%;
+              width: 150px;
+              height: 150px;
+              margin-right: 20px;
+              border: 3px solid #007bff;
+          }
+          .profile-info {
+              text-align: left;
+              color: #555;
+          }
+          .profile-info h2 {
+              margin: 0;
+              font-size: 1.5em;
+              color: #007bff;
+          }
+          .icons {
+              display: flex;
+              justify-content: flex-start;
+              margin-top: 10px;
+          }
+          .icons img {
+              width: 40px;
+              height: 40px;
+              margin-right: 10px;
+          }
+          .slide {
+              display: none;
+              padding: 20px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+              margin-bottom: 20px;
+              background-color: #f9f9f9;
+          }
+          .active {
+              display: block;
+          }
+          .navigation {
+              text-align: center;
+              margin-top: 20px;
+          }
+          button {
+              padding: 10px 20px;
+              margin: 5px;
+              border: none;
+              border-radius: 5px;
+              background-color: #007bff;
+              color: white;
+              cursor: pointer;
+              font-size: 16px;
+              transition: background-color 0.3s;
+          }
+          button:hover {
+              background-color: #0056b3;
+          }
+          .image {
+              width: 100%;
+              max-width: 150px;
+              height: auto;
+              margin: 5px;
+              cursor: pointer;
+              border-radius: 5px;
+              transition: transform 0.2s;
+          }
+          .image:hover {
+              transform: scale(1.05);
+          }
+          .modal {
+              display: none;
+              position: fixed;
+              z-index: 1000;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              overflow: auto;
+              background-color: rgb(0,0,0);
+              background-color: rgba(0,0,0,0.9);
+              padding-top: 60px;
+          }
+          .modal-content {
+              margin: auto;
+              display: block;
+              width: 80%;
+              max-width: 700px;
+          }
+          .close {
+              position: absolute;
+              top: 15px;
+              right: 35px;
+              color: white;
+              font-size: 40px;
+              font-weight: bold;
+              cursor: pointer;
+          }
+          @media (max-width: 600px) {
+              button {
+                  width: 100%;
+                  font-size: 14px;
+              }
+              .image {
+                  max-width: 100px;
+              }
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="profile">
+              <img src="https://i.imgur.com/ZMHnhlC.jpeg/150" alt="صورة شخصية">
+              <div class="profile-info">
+                  <h2>بيشوى ظريف</h2>
+                  <p>مصمم جرافيك</p>
+                  <p>رقم الهاتف: <a href="tel:01204123023">01204123023</a></p>
+                  <p>
+                      <a href="https://wa.me/201204123023" target="_blank">تواصل عبر واتس اب</a>
+                  </p>
+                  <p>البريد الإلكتروني: <a href="mailto:eng.beshoyzarif@gmail.com">eng.beshoyzarif@gmail.com</a></p>
+                  <div class="icons">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/512px-Adobe_Photoshop_CC_icon.svg.png?20200616073617/1200px-Adobe_Photoshop_CC_icon.svg.png" alt="Photoshop">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb5IBOVPI_RWPxLzGgV6w5mk7jCK9m2g-cFQ&s" alt="Illustrator">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Adobe_InDesign_CC_icon.svg/1051px-Adobe_InDesign_CC_icon.svg.png" alt="InDesign">
+                      <img src="https://blitzhandel24.imgbolt.de/media/image/ca/1c/62/CorelDRAW-Graphics-Suite.png" alt="Corel Draw">
+                  </div>
+              </div>
+          </div>
+          <div class="navigation">
+              <button onclick="showCategory('logo')">اللوجو</button>
+              <button onclick="showCategory('covers')">أغلفة كتب</button>
+              <button onclick="showCategory('prints')">مطبوعات ورقية</button>
+              <button onclick="showCategory('banners')">بنر</button>
+              <button onclick="showCategory('ads')">إعلانات</button>
+          </div>
+          <div class="slide active" data-category="logo">
+              <h2>Logo</h2>
+              <p>هذه هي محتويات الشريحة الأولى.</p>
+              <img src="https://i.imgur.com/VbbP58i.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/IvtI7Wk.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/YKrnH1Z.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/FTpjjpW.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/ZI1aebS.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/lPFuXs1.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/osSs6gD.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/k98S6BX.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/bz3ZlxT.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/0olVvew.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/SRa2n1F.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/tZoqVxR.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/5RBQDMU.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/MVl7oDk.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/eXaDMpq.png" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/UBi3fWr.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/zFenfbp.jpg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+            <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+            <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+          </div>
+          <div class="slide" data-category="covers">
+              <h2>أغلفة كتب</h2>
+              <p>هذه هي محتويات الشريحة الثانية.</p>
+            <img src="https://i.imgur.com/hZBCZTU.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/0PLBNEG.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/5UfO8XX.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/DnGLMaK.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/WjBCLbv.jpeg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/jRvWG0H.jpeg/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/PsoxMab.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/5lf1BUL.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/1M67TEl.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/37JIVP3.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/CXKaSfg.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/ojdkMlG.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/bEC4GsO.png/150" class="image" onclick="openModal(this.src)">
+            <img src="https://i.imgur.com/q18109Z.jpeg/150" class="image" onclick="openModal(this.src)">
+          </div>
+          <div class="slide" data-category="prints">
+              <h2>مطبوعات ورقية</h2>
+              <p>هذه هي محتويات الشريحة الثالثة.</p>
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+          </div>
+          <div class="slide" data-category="banners">
+              <h2>بنر</h2>
+              <p>هذه هي محتويات الشريحة الرابعة.</p>
+              <img src="https://i.imgur.com/xiApdeE.jpeg/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/6DiT8FD.png/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/eke3oaw.png/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/nf9P76U.png/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/PsHxOdQ.png/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/wW1bhXw.jpeg/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/hXs2Ndh.jpeg/150" class="image" onclick="openModal(this.src)">
+              <img src="https://i.imgur.com/YeQeSF7.jpeg/150" class="image" onclick="openModal(this.src)">
+          </div>
+          <div class="slide" data-category="ads">
+              <h2>إعلانات</h2>
+              <p>هذه هي محتويات الشريحة الخامسة.</p>
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+              <img src="https://via.placeholder.com/150" class="image" onclick="openModal(this.src)">
+          </div>
+          <div class="navigation">
+              <button onclick="prevSlide()">السابق</button>
+              <button onclick="nextSlide()">التالي</button>
+              <button onclick="toggleLanguage()">تغيير اللغة</button>
+          </div>
+      </div>
+
+      <div id="myModal" class="modal">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <img class="modal-content" id="img01">
+      </div>
+
+      <script>
+          let currentSlide = 0;
+          const slides = document.querySelectorAll('.slide');
+          const languages = {
+              ar: {
+                  title: "عرض تقديمي متجاوب مع صور",
+                  previous: "السابق",
+                  next: "التالي",
+                  changeLang: "تغيير اللغة"
+              },
+              en: {
+                  title: "Responsive Presentation with Images",
+                  previous: "Previous",
+                  next: "Next",
+                  changeLang: "Change Language"
+              }
+          };
+          let currentLang = 'ar';
+
+          function showSlide(index) {
+              slides.forEach((slide, i) => {
+                  slide.classList.toggle('active', i === index);
+              });
+          }
+
+          function nextSlide() {
+              currentSlide = (currentSlide + 1) % slides.length;
+              showSlide(currentSlide);
+          }
+
+          function prevSlide() {
+              currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+              showSlide(currentSlide);
+          }
+
+          function openModal(src) {
+              const modal = document.getElementById("myModal");
+              const img = document.getElementById("img01");
+              img.src = src;
+              modal.style.display = "block";
+          }
+
+          function closeModal() {
+              const modal = document.getElementById("myModal");
+              modal.style.display = "none";
+          }
+
+          function toggleLanguage() {
+              currentLang = currentLang === 'ar' ? 'en' : 'ar';
+              document.title = languages[currentLang].title;
+              document.querySelector('.navigation button:nth-child(1)').textContent = languages[currentLang].previous;
+              document.querySelector('.navigation button:nth-child(2)').textContent = languages[currentLang].next;
+              document.querySelector('.navigation button:nth-child(3)').textContent = languages[currentLang].changeLang;
+              document.querySelector('.navigation button:nth-child(4)').textContent = languages[currentLang].changeLang;
+          }
+
+          function showCategory(category) {
+              slides.forEach(slide => {
+                  slide.classList.remove('active');
+                  if (slide.dataset.category === category) {
+                      slide.classList.add('active');
+                  }
+              });
+          }
+
+          window.onclick = function(event) {
+              const modal = document.getElementById("myModal");
+              if (event.target === modal) {
+                  modal.style.display = "none";
+              }
+          }
+      </script>
+  </body>
+  </html>
